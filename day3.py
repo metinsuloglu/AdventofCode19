@@ -17,14 +17,14 @@ with open('day3.csv') as input_:
 directions = {'R':(1,0),'L':(-1,0),'U':(0,1),'D':(0,-1)}
 steps = [defaultdict(lambda: float('inf')), defaultdict(lambda: float('inf'))]
 for i, paths in enumerate(wires):
-    curr_cord = (0, 0)
+    curr_coord = (0, 0)
     time = 0
     for path in paths:
         direc, dist = path[:1], int(path[1:])
         for _ in range(1, dist+1):
             time += 1
-            curr_cord = tuple(sum(c) for c in zip(curr_cord, directions[direc]))
-            steps[i][curr_cord] = min(steps[i][curr_cord], time)
+            curr_coord = tuple(sum(c) for c in zip(curr_coord, directions[direc]))
+            steps[i][curr_coord] = min(steps[i][curr_coord], time)
         
 crossings = set(steps[0]).intersection(set(steps[1]))
 
