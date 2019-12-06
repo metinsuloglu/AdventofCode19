@@ -9,7 +9,8 @@ Created on Sun Dec  1 08:08:04 2019
 print('~*~*~ Day 1 ~*~*~')
 
 print('(Part One)')
-nums = open('day1.txt','r').readlines()
+with open('day1.txt','r') as input_:
+    nums = input_.read().splitlines()
 sum = 0
 for n in nums:
     sum += int(int(n)/3)-2
