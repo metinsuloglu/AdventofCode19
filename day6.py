@@ -26,18 +26,15 @@ def dfs(orbits):
         checked.add(curr[0])
         count += curr[1]
         s.extend([(orbit, curr[1]+1) for orbit in orbits[curr[0]] if orbit not in checked])
-    
     return count
 
 def find_santa(orbits):
     checked = set()
-    count = 0
     s = []
     s.append(('YOU',0))
     while len(s) != 0:
         curr = s.pop(0)
         checked.add(curr[0])
-        count += 1
         for orbit in orbits[curr[0]]:
             if orbit not in checked:
                 s.append((orbit, curr[1]+1))
