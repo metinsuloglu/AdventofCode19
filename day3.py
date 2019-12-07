@@ -33,3 +33,5 @@ print(min([abs(x) + abs(y) for x, y in crossings]))
 
 print('(Part Two)')
 print(min([steps[0][coord] + steps[1][coord] for coord in crossings]))
+
+print('~*~*~*~*~*~*~*~*~')

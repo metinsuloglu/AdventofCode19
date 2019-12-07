@@ -36,3 +36,5 @@ print(count_one)
 
 print('(Part Two)')
 print(count_two)
+
+print('~*~*~*~*~*~*~*~*~')
