@@ -35,9 +35,6 @@ class IntCode:
     def getVal(self, i, mode):
         return (self.program[i] if mode == 0 else i)
     
-    def give_inputs(self, inputs, capture_output=False):
-        return self.run(inputs=inputs, capture_output=capture_output)
-    
     def run(self, inputs=None, capture_output=False):
         input_num = 0
         outputs = []
