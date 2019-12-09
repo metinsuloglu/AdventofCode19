@@ -9,10 +9,12 @@ import csv
 class IntCode:
     
     def __init__(self, memory, i=0, noun=None, verb=None):
-       self.opcode_params = {1:3, 2:3, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3, 99:0}
+       self.opcode_params = {1:3, 2:3, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3, 9:1, 99:0}
        if type(memory) is list: self.program = memory
        else: self.program = IntCode.read_memory(memory)
+       self.program += [0] * 5 * len(self.program)
        self.i = i
+       self.relative_base = 0
        if noun is not None and verb is not None:
            self.program[1] = noun
            self.program[2] = verb
@@ -33,7 +35,12 @@ class IntCode:
         return opcode, modes
     
     def getVal(self, i, mode):
-        return (self.program[i] if mode == 0 else i)
+        if mode == 0:
+            return self.program[i]
+        elif mode == 1:
+            return i
+        else:
+            return self.program[i] + self.relative_base
     
     def run(self, inputs=None, capture_output=False):
         input_num = 0
@@ -68,6 +75,8 @@ class IntCode:
                 self.program[self.getVal(self.i+3, modes[2])] = int(self.program[self.getVal(self.i+1, modes[0])] < self.program[self.getVal(self.i+2, modes[1])])
             elif opcode == 8:
                 self.program[self.getVal(self.i+3, modes[2])] = int(self.program[self.getVal(self.i+1, modes[0])] == self.program[self.getVal(self.i+2, modes[1])])
+            elif opcode == 9:
+                self.relative_base += self.program[self.getVal(self.i+1, modes[0])]
             elif opcode == 99:
                 halt_code = 99
                 break
