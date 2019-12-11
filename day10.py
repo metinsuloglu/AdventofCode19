@@ -19,7 +19,7 @@ with open('day10.txt') as input_:
         asteroid_locs.update([(x, y) for x in np.argwhere(np.array(list(line))=='#')[:,0]])
         y += 1
         
-best_detect, best_station, best_slopes = float('-inf'), None, defaultdict(list)
+best_detect = float('-inf')
 for station in asteroid_locs:
     asteroids = asteroid_locs - {station}
     slopes = defaultdict(list)
@@ -39,13 +39,15 @@ angles = list(best_slopes.keys())
 angles.sort(reverse=True)
 split_ind = next(i for i, a in enumerate(angles) if a <= math.pi/2) 
 angles = angles[split_ind:] + angles[:split_ind]
+best_slopes.default_factory = None
 while len(best_slopes) > 0:
     for a in angles:
-        if len(best_slopes[a]) == 0:
+        if a not in best_slopes:
             continue
         best_slopes[a].sort(key=lambda c: c[0]**2 + c[1]**2)
         vaporised_asteroid = best_slopes[a].pop(0)
         vaporised += 1
+        if len(best_slopes[a]) == 0: best_slopes.pop(a)
         if vaporised == 200:
             asteroid = (best_station[0] + vaporised_asteroid[0], best_station[1] - vaporised_asteroid[1])
             print('(Part Two)')
