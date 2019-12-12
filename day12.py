@@ -23,8 +23,8 @@ while len(axes) > 0:
     step += 1
     for m1, m2 in combinations(range(len(positions)), 2):
         change = np.sign(positions[m1] - positions[m2])
-        velocities[m1] = np.add(velocities[m1], -change)
-        velocities[m2] = np.add(velocities[m2], change)
+        velocities[m1] -= change
+        velocities[m2] += change
     positions = np.add(positions, velocities)
     if step == 1000:
         print('(Part One)')
