@@ -8,16 +8,16 @@ import csv
 
 class IntCode:
     
-    def __init__(self, memory, i=0, noun=None, verb=None):
+    def __init__(self, memory, i=0, mem_vals=None):
        self.opcode_params = {1:3, 2:3, 3:1, 4:1, 5:2, 6:2, 7:3, 8:3, 9:1, 99:0}
        if type(memory) is list: self.program = memory
        else: self.program = IntCode.read_memory(memory)
        self.program += [0] * 5 * len(self.program)
        self.i = i
        self.relative_base = 0
-       if noun is not None and verb is not None:
-           self.program[1] = noun
-           self.program[2] = verb
+       if mem_vals is not None:
+           for key, value in mem_vals.items():
+               self.program[key] = value
     
     @staticmethod
     def read_memory(filename):
