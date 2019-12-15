@@ -12,7 +12,7 @@ from intcode import IntCode
 
 print('~*~*~ Day 15 ~*~*~')
 
-def make_map():
+def make_map(droid):
     dirs = {1:(0,-1), 2:(0,1), 3:(-1,0), 4:(1,0)}
     reverse = {1:2, 2:1, 3:4, 4:3}
     
@@ -62,7 +62,7 @@ def bfs(area, initial_loc, target):
 
 
 droid = IntCode('day15.csv')
-area = make_map()
+area = make_map(droid)
 
 print('(Part One)')
 oxygen_loc, dist = bfs(area, (0,0), 2)
