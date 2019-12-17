@@ -38,6 +38,7 @@ def compress(path, assigned={}, c_remain=['A','B','C']):
                 best_assigned.update(rest[1])
     return seq, best_assigned
 
+
 memory = IntCode.read_memory('day17.csv')
 camera = IntCode(memory.copy())
 scaffolds = defaultdict(lambda: '.')
@@ -67,29 +68,29 @@ print('(Part One)')
 print(align_param)
 
 robot = IntCode(memory, mem_vals={0:2})
-seq = []
+path = []
 forw_count = 0
 while True:
     forw_coord = tuple(np.add(curr_coord, dir_coord[curr_dir]))
     if scaffolds[forw_coord] == '.':
         if forw_count > 0: 
-            seq.append(forw_count)
+            path.append(forw_count)
             forw_count = 0
         left_dir, right_dir = (curr_dir - 1) % 4, (curr_dir + 1) % 4
         left = tuple(np.add(curr_coord, dir_coord[left_dir]))
         right = tuple(np.add(curr_coord, dir_coord[right_dir]))
         if scaffolds[left] == '#':
-            seq.extend(['L'])
+            path.append('L')
             curr_dir = left_dir
         elif scaffolds[right] == '#':
-            seq.extend(['R'])
+            path.append('R')
             curr_dir = right_dir
         else: break
     else:
         forw_count += 1
         curr_coord = forw_coord
 
-seq, assigned = compress(seq)
+seq, assigned = compress(path)
 seq = ','.join(seq) + '\n'
 assigned = {v:k for k, v in assigned.items()}
 _, outputs, _ = robot.run(inputs=list(map(ord, seq)), capture_output=True)
