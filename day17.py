@@ -21,9 +21,9 @@ def neighbours(coord, scaffolds):
 def compress(path, assigned={}, c_remain=['A','B','C']):
     if not len(path): return path, assigned
     seq, best_assigned = None, {}
-    for i in range(1, min(len(path) + 1, 10)):
+    for i in range(1, min(len(path) + 1, 11)):
         test_string = ','.join([str(c) for c in path[:i]])
-        if len(test_string) >= 20: break
+        if len(test_string) > 20: break
         assigned_iter = assigned.copy()
         if test_string not in assigned:
             if not len(c_remain): continue
